@@ -1,0 +1,87 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Docker (local database volumes) ###
+# MongoDB data (local bind mounts)
+mongodb/data/
+.devcontainer/mongodb/data/
+
+# RabbitMQ data (local bind mounts)
+rabbitmq/data/
+
+### Java & Spring ###
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Crash logs
+hs_err_pid*
+replay_pid*
+.mtj.tmp/
+
+# Spring logs
+spring.log
+
+### Logs ###
+*.log
+logs/
+log/
+
+### Gradle ###
+.gradle/
+
+### IntelliJ additional ###
+# IntelliJ sometimes writes compiled output here
+out/
+
+### OS files ###
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+### Environment files (keep examples) ###
+.env
+.env.*
+!.env.example
+
+### Docker compose (local-only overrides) ###
+docker-compose.override.yml
+docker-compose.*.local.yml

@@ -1,0 +1,59 @@
+services:
+    postgres-beautique:
+        image: postgres:13.3
+        hostname: postgres-beautique
+        environment:
+            POSTGRES_USER: beautique_user
+            POSTGRES_PASSWORD: beautique_password
+            POSTGRES_DB: beautique_db
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - beautique-network
+    rabbitmq:
+      image: rabbitmq:3-management
+      hostname: rabbitmq
+      environment:
+        RABBITMQ_DEFAULT_USER: user
+        RABBITMQ_DEFAULT_PASS: password
+      ports:
+        - '5672:5672'
+        - '15672:15672'
+      networks:
+        - beautique-network
+      volumes:
+        - ./rabbitmq/data/:/var/lib/rabbitmq/
+        - ./rabbitmq/log/:/var/log/rabbitmq/
+    mongodb:
+      container_name: mongodb
+      image: 'mongo:latest'
+      hostname: mongodb
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: mongoadmin
+        MONGO_INITDB_ROOT_PASSWORD: mongopassword
+        MONGO_INITDB_DATABASE: ms-beautique-query
+      volumes:
+        - ./mongodb/data/:/data/db/
+        - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
+      ports:
+        - "27017:27017"
+      networks:
+        - beautique-network
+      command:
+        - --auth
+      healthcheck:
+        test:  ["CMD", "mongosh", "-u", "mongoadmin", "-p", "mongopassword", "--authenticationDatabase", "admin", "--eval", "db.adminCommand('ping')"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+
+volumes:
+  mongodb_data:
+  postgres_data:
+
+
+networks:
+    beautique-network:
+        driver: bridge
